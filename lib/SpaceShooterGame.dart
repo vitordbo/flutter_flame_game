@@ -7,6 +7,10 @@ import 'package:flame/game.dart';
 import 'package:flutter_flame_game/model/Comet.dart';
 import 'package:flutter_flame_game/model/Player.dart';
 
+void main() {
+  runApp(GameWidget(game: SpaceShooterGame()));
+}
+
 class SpaceShooterGame extends FlameGame with PanDetector {
   late Player player;
   final List<Comet> comets = [];
@@ -36,9 +40,14 @@ class SpaceShooterGame extends FlameGame with PanDetector {
       add(comet);
       comets.add(comet);
     }
-  }
-}
 
-void main() {
-  runApp(GameWidget(game: SpaceShooterGame()));
+    // No método update de SpaceShooterGame
+    player.bullets.removeWhere((bullet) {
+      if (bullet.shouldRemove()) {
+        remove(bullet); // Remove a bala do jogo pai
+        return true;
+      }
+      return false;
+    });
+  }
 }

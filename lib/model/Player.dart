@@ -4,10 +4,29 @@ import 'package:flutter_flame_game/model/Bullet.dart';
 import 'dart:async';
 
 class Player extends SpriteComponent with HasGameRef<SpaceShooterGame> {
-  late Timer shootingTimer;
   bool isShooting = false;
+  double timeSinceLastShot = 0.0;
+  final double shootingInterval = 1.0; // Intervalo de disparo em segundos
+  final List<Bullet> bullets = []; // Lista para rastrear as balas disparadas
 
-  void startShooting() => Timer(Duration(seconds: 1) as double, onTick: fire);
+  @override
+  void update(double dt) {
+    super.update(dt);
+    timeSinceLastShot += dt;
+
+    if (isShooting && timeSinceLastShot >= shootingInterval) {
+      fire();
+      timeSinceLastShot = 0.0;
+    }
+  }
+
+  void startShooting() {
+    isShooting = true;
+  }
+
+  void stopShooting() {
+    isShooting = false;
+  }
 
   @override
   Future<void> onLoad() async {
@@ -30,5 +49,6 @@ class Player extends SpriteComponent with HasGameRef<SpaceShooterGame> {
       ..position = position.clone()
       ..anchor = Anchor.center;
     gameRef.add(bullet);
+    bullets.add(bullet); // Adicione a bala à lista de balas disparadas
   }
 }
