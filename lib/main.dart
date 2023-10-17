@@ -6,6 +6,7 @@ import 'package:game_2048/screens/game_play_screen.dart';
 import 'package:game_2048/screens/main_menu_screen.dart';
 import 'package:game_2048/screens/sound_screen.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:game_2048/shared/app_audios.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -40,4 +41,18 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+=======
+import 'package:flame_flutter/flame_flutter.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: FlameGame(
+          game: MeuJogo(),
+        ),
+      ),
+    ),
+  );
+>>>>>>> d8083115534cc26ef6e14ce137b275e2bf50f4ac
 }
