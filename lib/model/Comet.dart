@@ -8,10 +8,10 @@ class Comet extends SpriteComponent with HasGameRef<SpaceShooterGame> {
   Comet(this.game);
 
   @override
-  Future<void> onLoad() async {
+  void onLoad() async {
     sprite = await gameRef.loadSprite('asteroid.png');
-    width = 50;
-    height = 50;
+    size = Vector2(40.0, 40.0);
+    super.onLoad();
   }
 
   @override

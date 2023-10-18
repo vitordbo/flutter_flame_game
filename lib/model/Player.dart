@@ -3,11 +3,28 @@ import 'package:flutter_flame_game/SpaceShooterGame.dart';
 import 'package:flutter_flame_game/model/Bullet.dart';
 import 'dart:async';
 
-class Player extends SpriteComponent with HasGameRef<SpaceShooterGame> {
+class Player extends SpriteComponent 
+  with  HasGameRef<SpaceShooterGame>,
+        HasCollisionDetection,
+        CollisionCallbacks {
   bool isShooting = false;
   double timeSinceLastShot = 0.0;
   final double shootingInterval = 1.0; // Intervalo de disparo em segundos
   final List<Bullet> bullets = []; // Lista para rastrear as balas disparadas
+
+  @override
+  void onLoad() async {
+    sprite = await gameRef.loadSprite('player-sprite.png');
+    position = gameRef.size / 2;
+    size = Vector2(32.0, 48.0);
+    anchor = Anchor.center;
+
+    super.onLoad();
+  }
+
+  void move(Vector2 delta) {
+    position.add(delta);
+  }
 
   @override
   void update(double dt) {
@@ -26,22 +43,6 @@ class Player extends SpriteComponent with HasGameRef<SpaceShooterGame> {
 
   void stopShooting() {
     isShooting = false;
-  }
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    sprite = await gameRef.loadSprite('player-sprite.png');
-
-    position = gameRef.size / 2;
-    width = 100;
-    height = 100;
-    anchor = Anchor.center;
-  }
-
-  void move(Vector2 delta) {
-    position.add(delta);
   }
 
   void fire() {
