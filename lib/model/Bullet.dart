@@ -1,5 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter_flame_game/SpaceShooterGame.dart';
+import 'package:flutter_flame_game/model/Comet.dart';
+import 'package:flame/collisions.dart';
 
 class Bullet extends SpriteComponent 
   with  HasGameRef<SpaceShooterGame>,

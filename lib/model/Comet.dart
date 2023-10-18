@@ -1,11 +1,12 @@
 import 'package:flame/components.dart';
 import 'package:flutter_flame_game/SpaceShooterGame.dart';
+import 'package:flame/collisions.dart';
 
-class Comet extends SpriteComponent with HasGameRef<SpaceShooterGame> {
-  final SpaceShooterGame game;
+class Comet extends SpriteComponent 
+with  HasGameRef<SpaceShooterGame>,
+        HasCollisionDetection,
+        CollisionCallbacks {
   bool _shouldExplode = false; // Flag para sinalizar a explosão
-
-  Comet(this.game);
 
   @override
   void onLoad() async {

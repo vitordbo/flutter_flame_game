@@ -36,7 +36,7 @@ class SpaceShooterGame extends FlameGame with PanDetector {
     player.update(dt);
     // Lógica para criar cometas em intervalos regulares.
     if (Random().nextInt(200) < 5) {
-      final comet = Comet(this) // Passe a referência do jogo para o construtor.
+      final comet = Comet() // Passe a referência do jogo para o construtor.
         ..position = Vector2(Random().nextInt(size.x.toInt()).toDouble(), 0);
       add(comet);
       comets.add(comet);
