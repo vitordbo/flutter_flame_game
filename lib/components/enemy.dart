@@ -25,7 +25,7 @@ class Enemy extends SpriteAnimationComponent
       ),
     );
 
-    size = Vector2.all(32);
+    size = Vector2.all(80);
 
     add(
       RectangleHitbox.relative(
@@ -51,8 +51,8 @@ class Enemy extends SpriteAnimationComponent
     super.onCollisionStart(points, other);
 
     if (other is Shoot) {
+      game.player.score += 100.0;
       removeFromParent();
-
       other.removeFromParent();
     }
   }
@@ -62,7 +62,7 @@ class EnemySpawner extends TimerComponent with HasGameRef<SpaceShooterGame> {
   EnemySpawner()
       : super(
           repeat: true,
-          period: 1,
+          period: 0.5,
           autoStart: true,
         );
 

@@ -1,7 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_flame_game/components/enemy.dart';
 import 'package:flutter_flame_game/components/shoot.dart';
 import 'package:flutter_flame_game/game.dart';
@@ -13,11 +12,10 @@ class Player extends SpriteAnimationComponent
           anchor: Anchor.center,
         );
 
-  static const _speed = 400.0;
   double timeSinceLastShot = 0.0;
-  final double shootingInterval = 1.5; // Intervalo de disparo em segundos
-
-  final _direction = Vector2.zero();
+  double score = 0.0;
+  int hp = 5;
+  final double shootingInterval = 1.0; // Intervalo de disparo em segundos
 
   @override
   Future<void> onLoad() async {
@@ -29,6 +27,9 @@ class Player extends SpriteAnimationComponent
         textureSize: Vector2.all(48),
       ),
     );
+
+    score = 0.0;
+    hp = 5;
 
     size = Vector2.all(96);
 
@@ -52,22 +53,28 @@ class Player extends SpriteAnimationComponent
     super.onCollisionStart(points, other);
 
     if (other is Enemy) {
-      removeFromParent();
-
+      hp -= 1; 
       other.removeFromParent();
-
-      game.restartGame();
     }
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    timeSinceLastShot += dt; // mudar pra diminuir as balas
-
-    if (timeSinceLastShot >= shootingInterval) {
-      _shoot();
-      timeSinceLastShot = 0.0;
+    
+    if (hp <= 0) {
+      removeFromParent();
+      game.restartGame();
     }
+    else{
+      timeSinceLastShot += dt; // mudar pra diminuir as balas
+
+      if (timeSinceLastShot >= shootingInterval) {
+        _shoot();
+        timeSinceLastShot = 0.0;
+      }
+    }
+    
+
   }
 }
