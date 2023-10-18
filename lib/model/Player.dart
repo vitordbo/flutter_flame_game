@@ -12,9 +12,9 @@ class Player extends SpriteComponent with HasGameRef<SpaceShooterGame> {
   @override
   void update(double dt) {
     super.update(dt);
-    timeSinceLastShot += dt;
+    timeSinceLastShot += dt; // mudar pra diminuir as balas
 
-    if (isShooting && timeSinceLastShot >= shootingInterval) {
+    if (timeSinceLastShot >= shootingInterval) {
       fire();
       timeSinceLastShot = 0.0;
     }

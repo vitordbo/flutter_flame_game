@@ -3,6 +3,7 @@ import 'package:flutter_flame_game/SpaceShooterGame.dart';
 
 class Comet extends SpriteComponent with HasGameRef<SpaceShooterGame> {
   final SpaceShooterGame game;
+  bool _shouldExplode = false; // Flag para sinalizar a explosão
 
   Comet(this.game);
 
@@ -22,5 +23,9 @@ class Comet extends SpriteComponent with HasGameRef<SpaceShooterGame> {
     if (position.y > gameRef.size.y) {
       game.remove(this); // Use game para remover o cometa do jogo.
     }
+  }
+
+  bool shouldExplode() {
+    return _shouldExplode;
   }
 }

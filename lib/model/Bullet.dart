@@ -13,16 +13,6 @@ class Bullet extends SpriteComponent with HasGameRef<SpaceShooterGame> {
     if (position.y < 0) {
       _shouldRemove = true;
     }
-
-    // // Verifique colisões com cometas.
-    // final game = gameRef;
-    // for (final comet in game.comets) {
-    //   if (toRect().overlaps(comet.toRect())) {
-    //     _shouldRemove = true;
-    //     game.remove(comet); // Remova o cometa do jogo pai (SpaceShooterGame)
-    //     break;
-    //   }
-    // }
   }
 
   @override
