@@ -71,7 +71,6 @@ flutter:
     - assets/images/enemy.png
     - assets/images/explosion.png
     - assets/images/player-sprite.png
-    - assets/images/player.png
     - assets/images/stars.png
     - assets/images/asteroid.png
     

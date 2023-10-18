@@ -3,8 +3,9 @@ import 'package:flutter_flame_game/SpaceShooterGame.dart';
 import 'package:flutter_flame_game/model/Comet.dart';
 import 'package:flame/collisions.dart';
 
-class Bullet extends SpriteComponent 
-  with  HasGameRef<SpaceShooterGame>,
+class Bullet extends SpriteComponent
+    with
+        HasGameRef<SpaceShooterGame>,
         HasCollisionDetection,
         CollisionCallbacks {
   bool _shouldRemove = false; // Flag para sinalizar a remoção
@@ -23,15 +24,13 @@ class Bullet extends SpriteComponent
   @override
   void onLoad() async {
     sprite = await gameRef.loadSprite('bullet.png');
-    position = gameRef.size / 2;
     size = Vector2(5.0, 10.0);
-    anchor = Anchor.center;
 
     super.onLoad();
   }
 
   @override
-  void onCollision(Set<Vector2> points, PositionComponent other) {  
+  void onCollision(Set<Vector2> points, PositionComponent other) {
     if (other is Comet) {
       _shouldRemove = true;
     }
