@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_flame_game/model/Comet.dart';
 import 'package:flutter_flame_game/model/Player.dart';
-import 'package:flutter_flame_game/model/Bullet.dart';
 
 void main() {
-  runApp(GameWidget(game: SpaceShooterGame()));
+  runApp(
+    const GameWidget.controlled(
+      gameFactory: SpaceShooterGame.new,
+    ),
+    );
 }
 
-class SpaceShooterGame extends FlameGame with PanDetector {
+class SpaceShooterGame extends FlameGame with PanDetector, HasCollisionDetection {
   late Player player;
   final List<Comet> comets = [];
 
@@ -36,44 +39,14 @@ class SpaceShooterGame extends FlameGame with PanDetector {
     player.update(dt);
     // Lógica para criar cometas em intervalos regulares.
     if (Random().nextInt(200) < 5) {
-      final comet = Comet() // Passe a referência do jogo para o construtor.
-        ..position = Vector2(Random().nextInt(size.x.toInt()).toDouble(), 0);
+      final comet = Comet( position: Vector2(Random().nextInt(size.x.toInt()).toDouble(), 0) ); // Passe a referência do jogo para o construtor.
       add(comet);
       comets.add(comet);
     }
+  }
 
-    // No método update de SpaceShooterGame
-    player.bullets.removeWhere((bullet) {
-      if (bullet.shouldRemove()) {
-        remove(bullet); // Remove a bala do jogo pai
-        return true;
-      }
-      return false;
-    });
-
-    comets.removeWhere((comet) {
-      final bulletsToRemove = <Bullet>[];
-      final cometsToRemove = <Comet>[];
-
-      for (final bullet in player.bullets) {
-        if (bullet.toRect().overlaps(comet.toRect())) {
-          bulletsToRemove.add(bullet);
-          cometsToRemove.add(comet);
-          comet.shouldExplode(); // Marque o cometa para explosão
-        }
-      }
-
-      if (comet.shouldExplode()) {
-        // Adicione aqui a lógica de explosão do cometa, como trocar a imagem, tocar som, etc.
-        // Em seguida, remova o cometa do jogo.
-        remove(comet);
-      }
-
-      // Remova as balas marcadas para remoção.
-      player.bullets.removeWhere((bullet) => bulletsToRemove.contains(bullet));
-      comet.removeWhere((comet) => cometsToRemove.contains(comet));
-
-      return false;
-    });
+  void restartGame() {
+    player = Player();
+    add(player);
   }
 }

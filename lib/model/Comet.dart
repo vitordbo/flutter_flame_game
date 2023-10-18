@@ -6,12 +6,28 @@ class Comet extends SpriteComponent
 with  HasGameRef<SpaceShooterGame>,
         HasCollisionDetection,
         CollisionCallbacks {
-  bool _shouldExplode = false; // Flag para sinalizar a explosão
+  
+  Comet({
+    super.position,
+  }) : super(
+          anchor: Anchor.center,
+        );
 
   @override
   void onLoad() async {
     sprite = await gameRef.loadSprite('asteroid.png');
-    size = Vector2(40.0, 40.0);
+    size = Vector2(80.0, 80.0);
+    
+    add(
+      RectangleHitbox.relative(
+        Vector2(0.8, 0.8),
+        parentSize: size,
+        position: position,
+        collisionType: CollisionType.passive,
+        
+      ),
+    );
+
     super.onLoad();
   }
 
@@ -22,11 +38,8 @@ with  HasGameRef<SpaceShooterGame>,
 
     // Verifique colisões com o jogador ou limites da tela.
     if (position.y > gameRef.size.y) {
-      game.remove(this); // Use game para remover o cometa do jogo.
+      removeFromParent();
     }
   }
 
-  bool shouldExplode() {
-    return _shouldExplode;
-  }
 }

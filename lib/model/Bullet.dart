@@ -7,7 +7,13 @@ class Bullet extends SpriteComponent
   with  HasGameRef<SpaceShooterGame>,
         HasCollisionDetection,
         CollisionCallbacks {
-  bool _shouldRemove = false; // Flag para sinalizar a remoção
+ 
+  Bullet({
+    super.position,
+  }) : super(
+          anchor: Anchor.center,
+        );
+
 
   @override
   void update(double dt) {
@@ -16,29 +22,32 @@ class Bullet extends SpriteComponent
 
     // Verifique se a bala saiu dos limites da tela e marque para remoção, se necessário.
     if (position.y < 0) {
-      _shouldRemove = true;
+      gameRef.remove(this);
     }
   }
 
   @override
   void onLoad() async {
     sprite = await gameRef.loadSprite('bullet.png');
-    position = gameRef.size / 2;
-    size = Vector2(5.0, 10.0);
-    anchor = Anchor.center;
+    size = Vector2(10.0, 20);
+    
+    add(
+      RectangleHitbox.relative(
+        Vector2(0.8, 0.8),
+        parentSize: size,
+        position: position,
+      ),
+    );
 
     super.onLoad();
   }
 
   @override
-  void onCollision(Set<Vector2> points, PositionComponent other) {  
+  void onCollisionStart(Set<Vector2> points, PositionComponent other) {
+    super.onCollisionStart(points, other);
     if (other is Comet) {
-      _shouldRemove = true;
+      removeFromParent();
+      other.removeFromParent();
     }
-  }
-
-  // Método para verificar se a bala deve ser removida
-  bool shouldRemove() {
-    return _shouldRemove;
   }
 }
