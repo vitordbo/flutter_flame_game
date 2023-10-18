@@ -30,7 +30,6 @@ class Bullet extends SpriteComponent
   @override
   void onLoad() async {
     sprite = await gameRef.loadSprite('bullet.png');
-<<<<<<< HEAD
     size = Vector2(10.0, 20);
     
     add(
@@ -40,20 +39,13 @@ class Bullet extends SpriteComponent
         position: position,
       ),
     );
-=======
-    size = Vector2(5.0, 10.0);
->>>>>>> ac698769fa73844779602152b1335d58603fcbc6
 
     super.onLoad();
   }
 
   @override
-<<<<<<< HEAD
   void onCollisionStart(Set<Vector2> points, PositionComponent other) {
     super.onCollisionStart(points, other);
-=======
-  void onCollision(Set<Vector2> points, PositionComponent other) {
->>>>>>> ac698769fa73844779602152b1335d58603fcbc6
     if (other is Comet) {
       removeFromParent();
       other.removeFromParent();
