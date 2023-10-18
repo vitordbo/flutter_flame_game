@@ -14,7 +14,7 @@ class Shoot extends SpriteAnimationComponent with HasGameRef<SpaceShooterGame> {
   @override
   Future<void> onLoad() async {
     animation = await game.loadSpriteAnimation(
-      'shoot_2.png',
+      'asteroid.png',
       SpriteAnimationData.sequenced(
         amount: 4,
         stepTime: 0.1,
